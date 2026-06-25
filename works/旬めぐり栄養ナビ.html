@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>旬めぐり 栄養ナビ ― 低AGE × 疲れに効く食材</title>
+<meta name="description" content="月ごとの旬食材を低AGE調理法・疲労回復栄養素（鉄・B12・Mg・葉酸）つきで一覧表示。栄養バランスで今日の一品を自動提案する無料ツール。">
+<link rel="canonical" href="https://yuyomogi.github.io/works/旬めぐり栄養ナビ.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="旬めぐり 栄養ナビ ― 低AGE × 疲れに効く食材">
+<meta property="og:description" content="月ごとの旬食材を低AGE調理法・疲労回復栄養素（鉄・B12・Mg・葉酸）つきで一覧表示。栄養バランスで今日の一品を自動提案する無料ツール。">
+<meta property="og:url" content="https://yuyomogi.github.io/works/旬めぐり栄養ナビ.html">
+<meta property="og:site_name" content="旬めぐり 栄養ナビ">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="旬めぐり 栄養ナビ ― 低AGE × 疲れに効く食材">
+<meta name="twitter:description" content="月ごとの旬食材を低AGE調理法・疲労回復栄養素（鉄・B12・Mg・葉酸）つきで一覧表示。栄養バランスで今日の一品を自動提案する無料ツール。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#2a2622; --ink2:#6a6258; --paper:#f7f3ea; --card:#fffdf8;
+  --line:#e6ddcc; --line2:#efe8da; --seg:#e7decd;
+  --accent:#2e86a8; --accent-soft:#2e86a81a; --accent-ink:#1f5f78;
+  --r:14px; --shadow:0 1px 2px rgba(60,50,30,.05),0 8px 24px rgba(60,50,30,.06);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:
+    radial-gradient(120% 60% at 50% -10%, #fbf8f1 0%, var(--paper) 60%) fixed;
+  color:var(--ink);
+  font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",sans-serif;
+  line-height:1.6;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1040px;margin:0 auto;padding:22px 16px 80px}
+.mincho{font-family:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",serif}
+
+/* header */
+header{margin-bottom:14px}
+.eyebrow{font-size:.74rem;letter-spacing:.18em;color:var(--accent-ink);font-weight:700;margin:0 0 6px}
+h1{font-family:"Shippori Mincho",serif;font-weight:800;font-size:clamp(1.55rem,5.6vw,2.4rem);margin:0;letter-spacing:.02em;line-height:1.25}
+h1 .season-kanji{color:var(--accent);transition:color .5s ease}
+.lede{color:var(--ink2);font-size:.92rem;margin:8px 0 0;max-width:62ch}
+
+/* month rail */
+.rail-wrap{position:sticky;top:0;z-index:20;margin:18px -16px 0;padding:10px 16px;
+  background:linear-gradient(var(--paper),var(--paper) 70%, #f7f3ea00);backdrop-filter:saturate(1.1) blur(2px)}
+.season-row{display:flex;align-items:baseline;gap:10px;margin-bottom:6px}
+.season-label{font-family:"Shippori Mincho",serif;font-weight:700;font-size:1.05rem;color:var(--accent);transition:color .5s}
+.season-sub{font-size:.74rem;color:var(--ink2)}
+.rail{display:flex;gap:7px;overflow-x:auto;scrollbar-width:thin;padding-bottom:4px;-webkit-overflow-scrolling:touch}
+.rail::-webkit-scrollbar{height:5px}.rail::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px}
+.m-btn{flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--ink2);
+  font-family:inherit;font-size:.92rem;font-weight:500;padding:7px 13px;border-radius:999px;cursor:pointer;
+  transition:transform .15s, background .3s, color .3s, border-color .3s;white-space:nowrap}
+.m-btn:hover{transform:translateY(-1px)}
+.m-btn[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700;box-shadow:var(--shadow)}
+
+/* sections */
+section{margin-top:30px}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:4px;
+  border-bottom:1px solid var(--line);padding-bottom:8px}
+.sec-head h2{font-family:"Shippori Mincho",serif;font-weight:700;font-size:1.18rem;margin:0;letter-spacing:.02em}
+.sec-head .hint{font-size:.76rem;color:var(--ink2);text-align:right}
+.sec-num{font-size:.72rem;letter-spacing:.16em;color:var(--accent-ink);font-weight:700;display:block;margin-bottom:2px}
+
+/* grid + cards */
+.grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:14px}
+@media(min-width:620px){.grid{grid-template-columns:1fr 1fr}}
+@media(min-width:920px){.grid{grid-template-columns:1fr 1fr 1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 14px 12px;box-shadow:var(--shadow);
+  animation:rise .4s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.card-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.card-name{font-family:"Shippori Mincho",serif;font-weight:700;font-size:1.16rem;letter-spacing:.02em}
+.tag{font-size:.68rem;font-weight:700;padding:3px 8px;border-radius:999px;white-space:nowrap}
+.tag.fish{background:#e6f0f4;color:#1f6786}
+.tag.veg{background:#eaf1e3;color:#4f7a3a}
+.tag.fruit{background:#f6e9e6;color:#a85a44}
+.tag.all{background:#efeae0;color:#7a6f57}
+
+/* nutrient bars */
+.nutri{display:grid;grid-template-columns:1fr 1fr;gap:4px 12px;margin:2px 0 11px}
+.nrow{display:flex;align-items:center;gap:6px}
+.nlab{font-size:.7rem;color:var(--ink2);width:30px;flex:0 0 30px;text-align:right;font-weight:500}
+.segs{display:flex;gap:2px;flex:1}
+.seg{height:7px;flex:1;background:var(--seg);border-radius:2px;transition:background .3s}
+.seg.on{background:var(--accent)}
+.seg.on.dim{background:var(--accent-soft);background:color-mix(in srgb,var(--accent) 45%, #fff)}
+
+/* method chips */
+.methods{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.chip{font-size:.74rem;text-decoration:none;color:var(--accent-ink);background:var(--accent-soft);
+  border:1px solid color-mix(in srgb,var(--accent) 22%, #fff);padding:4px 9px;border-radius:8px;
+  transition:background .2s,transform .12s;display:inline-flex;align-items:center;gap:3px}
+.chip:hover{background:color-mix(in srgb,var(--accent) 16%, #fff);transform:translateY(-1px)}
+.chip svg{width:10px;height:10px;opacity:.7}
+.more{font-size:.72rem;color:var(--ink2);text-decoration:none;border-bottom:1px dotted var(--line);margin-left:2px}
+.more:hover{color:var(--accent-ink)}
+
+/* generator (mid) */
+.gen{background:linear-gradient(180deg,var(--card),#fffefb);border:1px solid var(--line);border-radius:18px;
+  padding:18px 16px;box-shadow:var(--shadow);margin-top:14px}
+.gen-intro{font-size:.86rem;color:var(--ink2);margin:0 0 14px}
+.gen-btn{appearance:none;border:0;cursor:pointer;font-family:"Shippori Mincho",serif;font-weight:700;font-size:1.02rem;
+  color:#fff;background:var(--accent);padding:12px 22px;border-radius:12px;letter-spacing:.04em;
+  box-shadow:0 6px 16px color-mix(in srgb,var(--accent) 35%, transparent);transition:transform .14s,filter .2s}
+.gen-btn:hover{transform:translateY(-1px);filter:brightness(1.04)}
+.gen-btn:active{transform:translateY(0)}
+.gen-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.reroll{appearance:none;background:transparent;border:1px solid var(--line);color:var(--ink2);font-family:inherit;
+  font-size:.84rem;padding:9px 14px;border-radius:10px;cursor:pointer}
+.reroll:hover{border-color:var(--accent);color:var(--accent-ink)}
+#result{margin-top:16px}
+.dish{font-family:"Shippori Mincho",serif;font-weight:700;font-size:clamp(1.2rem,4.6vw,1.5rem);line-height:1.4;
+  margin:0 0 4px;animation:rise .35s ease both}
+.dish em{font-style:normal;color:var(--accent);box-shadow:inset 0 -.4em 0 var(--accent-soft)}
+.picks{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 14px}
+.pick{font-size:.78rem;padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink)}
+.pick b{font-weight:700}
+.res-grid{display:grid;grid-template-columns:1fr;gap:14px}
+@media(min-width:640px){.res-grid{grid-template-columns:1.1fr 1fr}}
+.panel{border:1px solid var(--line2);border-radius:12px;padding:12px 13px;background:#fffdf9}
+.panel h4{margin:0 0 9px;font-size:.78rem;letter-spacing:.08em;color:var(--ink2);font-weight:700}
+.score{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.ring{--p:0;width:58px;height:58px;border-radius:50%;flex:0 0 58px;
+  background:conic-gradient(var(--accent) calc(var(--p)*1%), var(--seg) 0);display:grid;place-items:center}
+.ring i{width:44px;height:44px;border-radius:50%;background:var(--card);display:grid;place-items:center;
+  font-style:normal;font-weight:700;font-size:.95rem;font-family:"Shippori Mincho",serif}
+.score small{font-size:.78rem;color:var(--ink2)}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.badge{font-size:.74rem;font-weight:500;padding:4px 9px;border-radius:8px;background:var(--accent-soft);color:var(--accent-ink);
+  border:1px solid color-mix(in srgb,var(--accent) 18%, #fff)}
+.why{font-size:.78rem;color:var(--ink2);margin:12px 0 0;padding-top:10px;border-top:1px dashed var(--line)}
+.res-links{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+
+/* legend / footer */
+.legend{margin-top:34px;background:#fbf7ee;border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.legend h3{margin:0 0 8px;font-size:.86rem;font-family:"Shippori Mincho",serif;font-weight:700}
+.legend dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:3px 16px;margin:0;font-size:.78rem;color:var(--ink2)}
+.legend dt{display:inline;font-weight:700;color:var(--ink)}
+.legend dd{display:inline;margin:0}
+.scale{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:.76rem;color:var(--ink2);flex-wrap:wrap}
+.scale .segs{max-width:120px}
+.note{font-size:.74rem;color:var(--ink2);margin-top:12px;line-height:1.7}
+.foot{margin-top:18px;font-size:.72rem;color:#9b9486;text-align:center}
+:focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:6px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">低AGE × 疲れに効く 食材ナビ</p>
+    <h1 class="mincho">旬めぐり 栄養ナビ<span class="season-kanji" id="kanji">　夏</span></h1>
+    <p class="lede">月を選ぶと、その時期の旬食材を「期待できる栄養」と「低AGEで作れる調理法リンク」つきで一覧表示します。中段では栄養バランスを評価して一品を自動提案。下段は通年の土台食材です。糖化を抑えつつ、だるさ・疲れの土台になる栄養（鉄・B12・D・Mg・葉酸ほか）を補う設計です。</p>
+  </header>
+
+  <div class="rail-wrap">
+    <div class="season-row">
+      <span class="season-label" id="seasonLabel">夏</span>
+      <span class="season-sub" id="seasonSub">6〜8月：水分・青魚でスタミナ</span>
+    </div>
+    <div class="rail" id="rail" role="tablist" aria-label="月の選択"></div>
+  </div>
+
+  <!-- 上段 -->
+  <section aria-labelledby="h-season">
+    <div class="sec-head">
+      <div><span class="sec-num">01 ／ 旬の食材</span><h2 id="h-season" class="mincho"><span id="monthTitle">6月</span>の旬</h2></div>
+      <span class="hint">栄養は5段階の目安／<br>調理法をタップでレシピ検索</span>
+    </div>
+    <div class="grid" id="seasonGrid"></div>
+  </section>
+
+  <!-- 中段 -->
+  <section aria-labelledby="h-gen">
+    <div class="sec-head">
+      <div><span class="sec-num">02 ／ 自動提案</span><h2 id="h-gen" class="mincho">栄養バランスで一品を提案</h2></div>
+      <span class="hint">旬食材＋通年食材から<br>低AGEの組み合わせを生成</span>
+    </div>
+    <div class="gen">
+      <p class="gen-intro">選択中の月の旬食材と通年食材を、栄養の重なりが良くなるように組み合わせ、低AGE調理法とレシピリンクつきで提案します。鉄×ビタミンCなどの相乗効果も評価します。</p>
+      <div class="gen-row">
+        <button class="gen-btn" id="genBtn">この月の一品を提案する</button>
+        <button class="reroll" id="reroll" hidden>別の組み合わせ</button>
+      </div>
+      <div id="result"></div>
+    </div>
+  </section>
+
+  <!-- 下段 -->
+  <section aria-labelledby="h-all">
+    <div class="sec-head">
+      <div><span class="sec-num">03 ／ 通年の土台</span><h2 id="h-all" class="mincho">通年で使える食材</h2></div>
+      <span class="hint">毎週の定番に。<br>不足しがちな栄養を底上げ</span>
+    </div>
+    <div class="grid" id="allGrid"></div>
+  </section>
+
+  <div class="legend">
+    <h3>栄養パラメータの見かた</h3>
+    <dl>
+      <div><dt>鉄</dt><dd>＝鉄分（だるさ対策の要）</dd></div>
+      <div><dt>B12</dt><dd>＝ビタミンB12</dd></div>
+      <div><dt>D</dt><dd>＝ビタミンD</dd></div>
+      <div><dt>Mg</dt><dd>＝マグネシウム</dd></div>
+      <div><dt>葉酸</dt><dd>＝葉酸</dd></div>
+      <div><dt>C</dt><dd>＝ビタミンC（鉄の吸収を助ける）</dd></div>
+      <div><dt>繊維</dt><dd>＝食物繊維（血糖を穏やかに）</dd></div>
+      <div><dt>たん</dt><dd>＝たんぱく質</dd></div>
+    </dl>
+    <div class="scale">
+      <span>評価：</span>
+      <span class="segs" aria-hidden="true"><span class="seg"></span><span class="seg on dim"></span><span class="seg on dim"></span><span class="seg on"></span><span class="seg on"></span></span>
+      <span>左から 0（ほぼなし）→ 5（特に豊富）の相対的な目安</span>
+    </div>
+    <p class="note">※ 栄養評価は一般的な食材の含有傾向にもとづく相対的な目安で、正確な成分値ではありません。調理法リンクは外部のレシピ検索（クックパッド／Google）に移動します。本ツールは健康な成人向けの一般情報であり、治療・診断に代わるものではありません。持病・服薬・妊娠授乳期がある場合や、取れない疲れが数週間続く場合は、自己判断せず医療機関でフェリチン・ビタミンB12・ビタミンD・甲状腺・血算などの確認をおすすめします。</p>
+  </div>
+  <p class="foot">旬めぐり 栄養ナビ ／ 低AGE・疲労対策の食材リファレンス</p>
+</div>
+
+<script>
+const NKEYS=["fe","b12","d","mg","fol","c","fib","pro"];
+const NLAB ={fe:"鉄",b12:"B12",d:"D",mg:"Mg",fol:"葉酸",c:"C",fib:"繊維",pro:"たん"};
+// n = [fe,b12,d,mg,fol,c,fib,pro]
+const ING={
+ // 野菜
+ "ほうれん草":{t:"veg",n:[4,0,0,3,5,4,3,1],m:["おひたし","蒸し","煮浸し"]},
+ "小松菜":{t:"veg",n:[4,0,0,3,4,4,3,1],m:["おひたし","蒸し","煮浸し"]},
+ "菜の花":{t:"veg",n:[4,0,0,3,5,5,3,2],m:["おひたし","からし和え","さっと茹で"]},
+ "春菊":{t:"veg",n:[3,0,0,3,4,3,3,1],m:["おひたし","鍋","ごま和え"]},
+ "ブロッコリー":{t:"veg",n:[2,0,0,2,5,5,4,2],m:["蒸し","温サラダ","さっと茹で"]},
+ "芽キャベツ":{t:"veg",n:[2,0,0,2,4,5,4,2],m:["蒸し","煮込み","さっと茹で"]},
+ "かぼちゃ":{t:"veg",n:[2,0,0,2,2,3,4,1],m:["蒸し","煮物","スープ"]},
+ "さつまいも":{t:"veg",n:[1,0,0,2,2,3,5,1],m:["蒸し","煮物","スープ"]},
+ "れんこん":{t:"veg",n:[2,0,0,2,2,4,4,1],m:["蒸し","煮物","すりおろし汁"]},
+ "ごぼう":{t:"veg",n:[2,0,0,2,3,1,5,1],m:["煮物","きんぴら(少油)","スープ"]},
+ "里芋":{t:"veg",n:[1,0,0,2,2,2,3,1],m:["煮物","蒸し"]},
+ "大根":{t:"veg",n:[1,0,0,1,2,3,3,0],m:["煮物","おろし","蒸し"]},
+ "白菜":{t:"veg",n:[1,0,0,1,3,3,3,1],m:["鍋","蒸し煮","スープ"]},
+ "長ねぎ":{t:"veg",n:[1,0,0,1,2,2,2,1],m:["鍋","スープ","薬味"]},
+ "かぶ":{t:"veg",n:[1,0,0,1,2,3,2,1],m:["煮物","蒸し","浅漬け"]},
+ "トマト":{t:"veg",n:[1,0,0,1,2,4,2,1],m:["生","マリネ","スープ"]},
+ "きゅうり":{t:"veg",n:[1,0,0,1,2,2,2,0],m:["酢の物","生","和え物"]},
+ "なす":{t:"veg",n:[1,0,0,1,2,1,3,1],m:["蒸し","煮浸し","焼き浸し"]},
+ "パプリカ":{t:"veg",n:[1,0,0,1,2,5,2,1],m:["蒸し","さっと炒め","マリネ"]},
+ "ゴーヤ":{t:"veg",n:[1,0,0,1,3,5,3,1],m:["チャンプル(弱火)","おひたし","和え物"]},
+ "オクラ":{t:"veg",n:[2,0,0,2,4,3,4,1],m:["さっと茹で","おひたし","和え物"]},
+ "モロヘイヤ":{t:"veg",n:[3,0,0,3,5,4,5,2],m:["さっと茹で","おひたし","スープ"]},
+ "とうもろこし":{t:"veg",n:[1,0,0,2,2,2,4,2],m:["蒸し","茹で"]},
+ "枝豆":{t:"veg",n:[3,0,0,3,5,2,4,4],m:["塩茹で","蒸し"]},
+ "そら豆":{t:"veg",n:[2,0,0,2,4,3,3,3],m:["塩茹で","蒸し"]},
+ "グリンピース":{t:"veg",n:[2,0,0,2,4,3,4,3],m:["さっと茹で","煮物"]},
+ "アスパラ":{t:"veg",n:[2,0,0,1,4,3,2,1],m:["蒸し","温サラダ","さっと茹で"]},
+ "春キャベツ":{t:"veg",n:[1,0,0,1,4,4,3,1],m:["蒸し","生","さっと煮"]},
+ "新玉ねぎ":{t:"veg",n:[1,0,0,1,2,3,2,1],m:["蒸し","生","スープ"]},
+ "新じゃが":{t:"veg",n:[1,0,0,1,2,4,3,1],m:["蒸し","煮物"]},
+ "たけのこ":{t:"veg",n:[1,0,0,1,3,2,4,2],m:["煮物","蒸し","木の芽和え"]},
+ "きのこ類":{t:"veg",n:[1,0,3,2,3,0,5,2],m:["ホイル蒸し","スープ","蒸し","さっと炒め"]},
+ // 果物
+ "いちご":{t:"fruit",n:[1,0,0,1,4,5,2,0],m:["生"]},
+ "甘夏":{t:"fruit",n:[0,0,0,1,2,5,2,0],m:["生"]},
+ "みかん":{t:"fruit",n:[0,0,0,1,2,5,2,0],m:["生"]},
+ "キウイ":{t:"fruit",n:[1,0,0,1,3,5,3,1],m:["生"]},
+ "柿":{t:"fruit",n:[0,0,0,1,2,5,3,0],m:["生"]},
+ "りんご":{t:"fruit",n:[0,0,0,1,1,2,3,0],m:["生"]},
+ "梨":{t:"fruit",n:[0,0,0,1,1,2,2,0],m:["生"]},
+ "ぶどう":{t:"fruit",n:[1,0,0,1,1,2,2,0],m:["生"]},
+ "桃":{t:"fruit",n:[0,0,0,1,1,3,2,0],m:["生"]},
+ "すいか":{t:"fruit",n:[0,0,0,1,1,3,1,0],m:["生"]},
+ "メロン":{t:"fruit",n:[0,0,0,1,3,4,1,0],m:["生"]},
+ "びわ":{t:"fruit",n:[0,0,0,1,1,2,2,0],m:["生"]},
+ "いちじく":{t:"fruit",n:[1,0,0,2,2,2,4,0],m:["生"]},
+ "栗":{t:"fruit",n:[1,0,0,2,3,3,4,2],m:["蒸し","茹で"]},
+ "きんかん":{t:"fruit",n:[0,0,0,1,1,5,3,0],m:["生","甘煮"]},
+ "さくらんぼ":{t:"fruit",n:[0,0,0,1,1,2,1,0],m:["生"]},
+ // 魚介
+ "牡蠣":{t:"fish",n:[5,5,2,3,3,1,0,4],m:["蒸し","鍋","豆乳鍋","炊き込み"]},
+ "たら":{t:"fish",n:[1,4,2,2,1,0,0,5],m:["蒸し","鍋","あんかけ"]},
+ "ぶり":{t:"fish",n:[2,5,4,3,1,0,0,5],m:["しゃぶしゃぶ","煮物","蒸し"]},
+ "ほたて":{t:"fish",n:[2,5,0,3,2,0,0,4],m:["蒸し","刺身","クリーム煮"]},
+ "鰆":{t:"fish",n:[1,4,4,3,1,0,0,5],m:["酒蒸し","煮付け","幽庵蒸し"]},
+ "かつお":{t:"fish",n:[5,5,1,3,2,0,0,5],m:["たたき","漬け","刺身"]},
+ "あさり":{t:"fish",n:[5,5,0,3,2,0,0,2],m:["酒蒸し","味噌汁","煮物"]},
+ "しじみ":{t:"fish",n:[5,5,0,2,2,0,0,2],m:["味噌汁","炊き込み"]},
+ "はまぐり":{t:"fish",n:[3,5,0,2,2,0,0,3],m:["酒蒸し","潮汁"]},
+ "ほたるいか":{t:"fish",n:[3,5,2,2,3,1,0,3],m:["酢味噌和え","さっと茹で"]},
+ "あじ":{t:"fish",n:[2,4,3,3,1,0,0,5],m:["焼き霜マリネ","蒸し南蛮","なめろう"]},
+ "いわし":{t:"fish",n:[2,5,4,3,1,0,0,4],m:["梅煮","つみれ","蒸し"]},
+ "さんま":{t:"fish",n:[2,5,3,3,1,0,0,5],m:["煮付け","つみれ"]},
+ "鮭":{t:"fish",n:[1,5,5,2,1,0,0,5],m:["ホイル蒸し","酒蒸し","紙包み蒸し"]},
+ "さば":{t:"fish",n:[2,5,4,3,1,0,0,5],m:["味噌煮","竜田蒸し","水煮缶活用"]},
+ "たこ":{t:"fish",n:[2,3,0,3,1,0,0,4],m:["刺身","マリネ","カルパッチョ"]},
+ "うなぎ":{t:"fish",n:[2,4,4,2,2,1,0,4],m:["蒸し","茶碗蒸し"]},
+ "わかさぎ":{t:"fish",n:[2,4,3,2,2,0,0,4],m:["南蛮(揚げ控えめ)","焼き"]},
+ // 通年
+ "雑穀・玄米":{t:"all",n:[2,0,0,4,2,0,5,2],m:["炊く"]},
+ "オートミール":{t:"all",n:[3,0,0,4,1,0,5,3],m:["煮る","オーバーナイト"]},
+ "納豆":{t:"all",n:[2,0,0,3,4,0,4,4],m:["そのまま"]},
+ "豆腐":{t:"all",n:[2,0,0,3,2,0,1,4],m:["冷奴","湯豆腐","味噌汁"]},
+ "蒸し大豆":{t:"all",n:[3,0,0,4,4,0,5,5],m:["煮る","サラダ","スープ"]},
+ "卵":{t:"all",n:[2,3,2,1,2,0,0,5],m:["ゆで","スープ煮","温泉卵"]},
+ "ヨーグルト":{t:"all",n:[0,2,0,1,1,1,0,3],m:["そのまま"]},
+ "わかめ":{t:"all",n:[3,0,0,5,3,1,5,2],m:["味噌汁","酢の物","サラダ"]},
+ "ひじき":{t:"all",n:[4,0,0,5,2,0,5,2],m:["煮物","サラダ"]},
+ "ごま":{t:"all",n:[4,0,0,5,2,0,4,3],m:["和え物","ふりかけ"]},
+ "くるみ":{t:"all",n:[2,0,0,5,1,0,4,3],m:["そのまま","和え物"]},
+ "焼きのり":{t:"all",n:[3,3,0,4,4,2,5,4],m:["そのまま","手巻き"]},
+ "切り干し大根":{t:"all",n:[3,0,0,3,2,1,5,2],m:["煮物","和え物"]},
+ "味噌":{t:"all",n:[2,0,0,3,2,0,2,3],m:["味噌汁"]}
+};
+const MONTHS={
+ 1:["大根","白菜","長ねぎ","ほうれん草","小松菜","ブロッコリー","春菊","かぶ","牡蠣","たら","ぶり","ほたて","みかん","りんご"],
+ 2:["大根","白菜","長ねぎ","ほうれん草","小松菜","ブロッコリー","春菊","芽キャベツ","牡蠣","たら","ぶり","わかさぎ","みかん","きんかん"],
+ 3:["菜の花","春キャベツ","新玉ねぎ","アスパラ","春菊","たけのこ","鰆","あさり","ほたるいか","はまぐり","いちご","甘夏"],
+ 4:["菜の花","春キャベツ","新玉ねぎ","新じゃが","アスパラ","たけのこ","そら豆","グリンピース","あさり","鰆","かつお","いちご"],
+ 5:["春キャベツ","アスパラ","そら豆","グリンピース","たけのこ","新玉ねぎ","かつお","あじ","はまぐり","いちご","びわ","わかめ"],
+ 6:["トマト","きゅうり","なす","パプリカ","オクラ","モロヘイヤ","あじ","いわし","しじみ","さくらんぼ","メロン","びわ"],
+ 7:["トマト","きゅうり","なす","パプリカ","ゴーヤ","オクラ","とうもろこし","枝豆","モロヘイヤ","あじ","いわし","うなぎ","桃","すいか"],
+ 8:["トマト","なす","パプリカ","ゴーヤ","オクラ","とうもろこし","枝豆","かぼちゃ","いわし","あじ","たこ","桃","ぶどう"],
+ 9:["さつまいも","かぼちゃ","なす","れんこん","きのこ類","里芋","さんま","鮭","さば","いちじく","梨","ぶどう"],
+ 10:["さつまいも","かぼちゃ","れんこん","里芋","ごぼう","きのこ類","ほうれん草","さんま","鮭","さば","ぶり","柿","りんご","栗"],
+ 11:["れんこん","ごぼう","里芋","大根","白菜","ほうれん草","春菊","きのこ類","ぶり","鮭","牡蠣","さば","柿","みかん"],
+ 12:["大根","白菜","長ねぎ","ほうれん草","小松菜","ブロッコリー","春菊","れんこん","牡蠣","たら","ぶり","ほたて","みかん"]
+};
+const YEAR=["雑穀・玄米","オートミール","納豆","豆腐","蒸し大豆","卵","ヨーグルト","わかめ","ひじき","ごま","くるみ","焼きのり","切り干し大根","味噌"];
+const TAGTXT={fish:"魚介",veg:"野菜",fruit:"果物",all:"通年"};
+
+const season=m=>([3,4,5].includes(m)?{k:"春",accent:"#7BA05B",aink:"#4f6e36",sub:"3〜5月：鉄・葉酸でリスタート"}:
+  [6,7,8].includes(m)?{k:"夏",accent:"#2E86A8",aink:"#1f5f78",sub:"6〜8月：水分・青魚でスタミナ"}:
+  [9,10,11].includes(m)?{k:"秋",accent:"#C56B2E",aink:"#9a501f",sub:"9〜11月：きのこ・青魚でビタミンD"}:
+  {k:"冬",accent:"#2F6E6A",aink:"#1f504c",sub:"12〜2月：牡蠣・葉物で鉄・D"});
+
+const cp=q=>"https://cookpad.com/jp/search/"+encodeURIComponent(q);
+const gg=q=>"https://www.google.com/search?q="+encodeURIComponent(q+" レシピ");
+const ICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M9 7h8v8"/></svg>';
+
+function segHTML(v){let s="";for(let i=0;i<5;i++){s+=`<span class="seg ${i<v?'on':''} ${i<v&&i>=3?'':'dim'}"></span>`}return s;}
+function nutriHTML(n){let h="";NKEYS.forEach((k,i)=>{if(["fe","b12","d","mg","fol","c","fib","pro"].includes(k)){
+  h+=`<div class="nrow"><span class="nlab">${NLAB[k]}</span><span class="segs" role="img" aria-label="${NLAB[k]} ${n[i]}段階">${segHTML(n[i])}</span></div>`;}});return h;}
+function methodsHTML(name,d){
+  let chips=d.m.map(me=>`<a class="chip" target="_blank" rel="noopener" href="${cp(name+' '+me)}">${me}${ICON}</a>`).join("");
+  chips+=`<a class="more" target="_blank" rel="noopener" href="${gg(name+' '+d.m.join(' '))}">他のレシピ</a>`;
+  return chips;
+}
+function cardHTML(name){const d=ING[name];return `<article class="card">
+  <div class="card-top"><span class="card-name mincho">${name}</span><span class="tag ${d.t}">${TAGTXT[d.t]}</span></div>
+  <div class="nutri">${nutriHTML(d.n)}</div>
+  <div class="methods">${methodsHTML(name,d)}</div></article>`;}
+
+let current=6;
+function render(m){
+  current=m;const s=season(m);
+  document.documentElement.style.setProperty('--accent',s.accent);
+  document.documentElement.style.setProperty('--accent-ink',s.aink);
+  document.documentElement.style.setProperty('--accent-soft',s.accent+"1f");
+  document.getElementById('kanji').textContent="　"+s.k;
+  document.getElementById('seasonLabel').textContent=s.k;
+  document.getElementById('seasonSub').textContent=s.sub;
+  document.getElementById('monthTitle').textContent=m+"月";
+  document.querySelectorAll('.m-btn').forEach(b=>b.setAttribute('aria-pressed',(+b.dataset.m===m)));
+  document.getElementById('seasonGrid').innerHTML=MONTHS[m].map(cardHTML).join("");
+  document.getElementById('result').innerHTML="";
+  document.getElementById('reroll').hidden=true;
+}
+
+// rail
+const rail=document.getElementById('rail');
+for(let m=1;m<=12;m++){const b=document.createElement('button');b.className="m-btn";b.dataset.m=m;
+  b.textContent=m+"月";b.setAttribute('role','tab');b.setAttribute('aria-pressed','false');
+  b.onclick=()=>{render(m);b.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'});};rail.appendChild(b);}
+
+// generator
+function pick(arr,n){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a.slice(0,n);}
+function combine(names){const c=[0,0,0,0,0,0,0,0];names.forEach(nm=>ING[nm].n.forEach((v,i)=>{if(v>c[i])c[i]=v;}));return c;}
+function badges(c){const b=[];const g=k=>c[NKEYS.indexOf(k)];
+  if(g("fe")>=3&&g("c")>=3)b.push("鉄 × ビタミンC：吸収アップ");
+  if(g("fe")>=3&&g("b12")>=3)b.push("鉄＋B12をダブル補給");
+  if(g("d")>=3)b.push("ビタミンD補給（日照不足対策）");
+  if(g("fib")>=4)b.push("食物繊維で血糖おだやか");
+  if(g("mg")>=4)b.push("マグネシウム充実");
+  if(g("fol")>=4)b.push("葉酸しっかり");
+  if(g("pro")>=4&&b.length<4)b.push("良質たんぱくでスタミナ");
+  return b.slice(0,4);
+}
+function generate(){
+  const list=MONTHS[current];
+  const fish=list.filter(n=>ING[n].t==="fish");
+  const veg=list.filter(n=>ING[n].t==="veg");
+  const main=fish.length?pick(fish,1)[0]:pick(["豆腐","卵","蒸し大豆"],1)[0];
+  const sides=pick(veg.length>=2?veg:list.filter(n=>ING[n].t!=="fish"),2);
+  const base=pick(["雑穀・玄米","わかめ","ひじき","ごま","納豆","焼きのり","切り干し大根"],1)[0];
+  const chosen=[main,...sides,base];
+  const c=combine(chosen);
+  const covered=c.filter(v=>v>=3).length;
+  const method=ING[main].m[0];
+  const dish=`<em>${main}</em>の${method}　<span style="white-space:nowrap">${sides[0]}と${sides[1]}を添えて</span>`;
+  const bg=badges(c);
+  const pct=Math.round(covered/8*100);
+  const picksHTML=chosen.map(nm=>`<span class="pick"><b>${nm}</b> <span style="color:var(--ink2);font-size:.72rem">${TAGTXT[ING[nm].t]}</span></span>`).join("");
+  const links=`<a class="chip" target="_blank" rel="noopener" href="${cp(main+' '+method)}">${main}の${method}${ICON}</a>
+     <a class="chip" target="_blank" rel="noopener" href="${cp(sides[0]+' おひたし')}">${sides[0]}の副菜${ICON}</a>
+     <a class="more" target="_blank" rel="noopener" href="${gg(main+' '+sides[0]+' 献立')}">この組み合わせを検索</a>`;
+  document.getElementById('result').innerHTML=`
+   <p class="dish mincho">${dish}</p>
+   <p style="margin:2px 0 0;font-size:.8rem;color:var(--ink2)">＋ 土台に <b>${base}</b> を一品。調理は<b>${method}</b>で、糖化を抑えながら。</p>
+   <div class="picks">${picksHTML}</div>
+   <div class="res-grid">
+     <div class="panel">
+       <h4>この組み合わせの栄養（最大値）</h4>
+       <div class="nutri" style="grid-template-columns:1fr 1fr">${nutriHTML(c)}</div>
+     </div>
+     <div class="panel">
+       <h4>栄養カバーと相乗効果</h4>
+       <div class="score"><div class="ring" style="--p:${pct}"><i>${covered}/8</i></div>
+         <small>主要8栄養素のうち<br><b>${covered}項目</b>をしっかりカバー</small></div>
+       <div class="badges">${bg.length?bg.map(t=>`<span class="badge">${t}</span>`).join(""):'<span class="badge">バランス型の一品です</span>'}</div>
+       <div class="res-links">${links}</div>
+     </div>
+   </div>
+   <p class="why">なぜこの調理？ ― 蒸す・煮る・しゃぶしゃぶ・マリネなどの低温・湿式調理は、揚げ・焼き・ローストに比べてAGE（糖化最終生成物）の生成を抑えられるため、毎日続ける一品に向いています。</p>`;
+  document.getElementById('reroll').hidden=false;
+}
+document.getElementById('genBtn').onclick=generate;
+document.getElementById('reroll').onclick=generate;
+
+// year-round (sorted by iron desc for usefulness)
+document.getElementById('allGrid').innerHTML=
+  [...YEAR].sort((a,b)=>ING[b].n[0]-ING[a].n[0]).map(cardHTML).join("");
+
+// init at current month (date-aware, fallback 6)
+const now=new Date();const initM=(now.getMonth()+1)||6;
+render(initM);
+const ab=document.querySelector(`.m-btn[data-m="${initM}"]`);if(ab)ab.scrollIntoView({inline:'center',block:'nearest'});
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "旬めぐり 栄養ナビ",
+  "description": "月ごとの旬食材を低AGE調理法・疲労回復栄養素（鉄・B12・Mg・葉酸）つきで一覧表示。栄養バランスで今日の一品を自動提案する無料ツール。",
+  "url": "https://yuyomogi.github.io/works/旬めぐり栄養ナビ.html",
+  "applicationCategory": "HealthApplication",
+  "inLanguage": "ja",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" }
+}
+</script>
+</body>
+</html>
